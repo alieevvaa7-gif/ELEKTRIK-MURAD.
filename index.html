@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Электрик Мурад — предпросмотр</title>
+<style>
+:root{--bg:#111315;--panel:#1a1d20;--panel2:#22262a;--text:#f5f5f5;--muted:#aeb4ba;--accent:#f4c400;--line:#343a40;--danger:#d9534f}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0d0f10;color:var(--text)}
+.app{display:flex;min-height:100vh}.side{width:245px;background:#17191b;border-right:1px solid var(--line);padding:22px 14px;position:fixed;inset:0 auto 0 0}
+.logo{font-weight:900;font-size:22px;letter-spacing:.5px;padding:8px 12px 25px}.bolt{color:var(--accent);font-size:28px}.nav button{width:100%;background:none;border:0;color:#ddd;text-align:left;padding:13px 14px;border-radius:9px;font-size:15px;cursor:pointer;margin:2px 0}.nav button:hover,.nav button.active{background:#2a2e32;color:#fff}.nav button.active{border-left:4px solid var(--accent)}
+.main{margin-left:245px;width:calc(100% - 245px);padding:28px;max-width:1500px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:28px}.badge{background:#2b2f33;padding:8px 12px;border-radius:20px;color:#ddd}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}.stat{font-size:29px;font-weight:800;margin-top:8px}.muted{color:var(--muted);font-size:13px}.hero{background:linear-gradient(135deg,#1a1d20,#2a2f34);border-radius:18px;padding:30px;margin-bottom:18px;border:1px solid #383e44}.hero h2{font-size:35px;margin:0 0 8px}.accent{color:var(--accent)}.btn{border:0;border-radius:9px;padding:11px 16px;background:var(--accent);font-weight:800;cursor:pointer}.btn.secondary{background:#30353a;color:#fff}.btn.danger{background:var(--danger);color:#fff}.actions{display:flex;gap:9px;flex-wrap:wrap}
+.search,input,select,textarea{width:100%;background:#101214;border:1px solid #3a4147;color:#fff;border-radius:8px;padding:11px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.table{width:100%;border-collapse:collapse;margin-top:15px}.table th,.table td{padding:11px;border-bottom:1px solid var(--line);text-align:left}.table th{color:#aaa;font-size:12px}.catgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.cat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer}.cat:hover{border-color:#777}.cat b{display:block;margin-bottom:7px}.total{font-size:24px;font-weight:900;text-align:right;margin-top:15px}.empty{padding:35px;text-align:center;color:#999;background:var(--panel);border-radius:12px}
+@media(max-width:900px){.side{width:75px;padding:12px 8px}.logo{font-size:0;text-align:center}.logo .bolt{font-size:28px}.nav button{font-size:0;text-align:center;padding:13px}.nav button:first-letter{font-size:18px}.main{margin-left:75px;width:calc(100% - 75px);padding:15px}.grid{grid-template-columns:repeat(2,1fr)}.catgrid{grid-template-columns:1fr 1fr}.hero h2{font-size:27px}}
+@media(max-width:600px){.grid,.catgrid,.row{grid-template-columns:1fr}.top h1{font-size:22px}.main{padding:10px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side"><div class="logo"><span class="bolt">⚡</span> ЭЛЕКТРИК МУРАД</div><nav class="nav" id="nav"></nav></aside>
+<main class="main"><div class="top"><h1 id="title"></h1><span class="badge">ПРЕДПРОСМОТР</span></div><section id="content"></section></main>
+</div>
+<script>
+const cats=[
+["Электромонтажные работы",12],["Кабельная продукция",18],["Электрощитовое оборудование",16],["Автоматы и УЗО",14],
+["Розетки и выключатели",12],["Светотехника",10],["Установочные изделия",9],["Материалы для монтажа",11],
+["Инструменты",7],["Дополнительные услуги",6],["Слаботочные системы",8],["Освещение участка",8],
+["Тёплый пол",7],["Вентиляция",6],["Кондиционирование",7],["Бассейны",8],["Гараж",7],["Мастерская",8],
+["Генераторы",5],["Стабилизаторы",6],["ИБП",5],["Счётчики",6],["Заземление",8],["Молниезащита",6],
+["Домофоны",5],["Видеонаблюдение",7],["Интернет",6],["Телевидение",5],["Умный дом",7],["Датчики",6],
+["Щитовое оборудование",8],["DIN-компоненты",8],["Клеммы и шины",7],["Гофра и трубы",8],["Крепёж",7],
+["Расходные материалы",9],["Сервис и диагностика",8],["Проектирование",5]
+];
+const demo={
+"Кабельная продукция":[["ВВГ 3×1,5","м",65],["ВВГ 3×2,5","м",95],["ВВГ 3×4","м",145],["ВВГ 3×6","м",210],["ПВС 3×1,5","м",60],["ПВС 3×2,5","м",90],["NYM 3×2,5","м",120],["NYM 3×4","м",170],["ШВВП 2×0,75","м",40],["КГ 3×1,5","м",85]],
+"Розетки и выключатели":[["Розетка Schneider","шт",350],["Выключатель Schneider","шт",320],["Розетка влагозащищённая","шт",650]],
+"Автоматы и УЗО":[["Автомат 16А","шт",450],["Автомат 25А","шт",480],["УЗО 40А 30мА","шт",1850]],
+"Электромонтажные работы":[["Установка розетки","шт",350],["Установка выключателя","шт",300],["Монтаж точки освещения","шт",500],["Монтаж распределительной коробки","шт",700]],
+"Светотехника":[["Установка люстры","шт",1200],["Установка бра","шт",700],["Установка точечного светильника","шт",450]]
+};
+let current="Главная", currentCat=null, estimate=JSON.parse(localStorage.getItem("murad_estimate")||"[]");
+
+const navItems=[["🏠","Главная"],["💰","Прайс"],["🧮","Калькулятор"],["📋","Сметы и заказы"],["⚡","Электрощиты"],["🔩","Материалы"],["✅","Чек-лист"],["⚙️","Настройки"]];
+document.getElementById("nav").innerHTML=navItems.map(x=>`<button onclick="go('${x[1]}')" id="n-${x[1]}">${x[0]} &nbsp; ${x[1]}</button>`).join("");
+
+function go(page){current=page;currentCat=null;document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));document.getElementById("n-"+page).classList.add("active");render()}
+function render(){document.getElementById("title").textContent=current;const c=document.getElementById("content");
+if(current==="Главная")return home(c); if(current==="Прайс")return price(c); if(current==="Калькулятор")return calc(c); if(current==="Сметы и заказы")return orders(c); if(current==="Электрощиты")return panels(c); if(current==="Материалы")return materials(c); if(current==="Чек-лист")return checklist(c); if(current==="Настройки")return settings(c)}
+function home(c){c.innerHTML=`<div class="hero"><h2>Добро пожаловать,<br><span class="accent">ЭЛЕКТРИК МУРАД!</span></h2><p class="muted">Профессиональные электромонтажные работы под ключ.</p><button class="btn" onclick="go('Прайс')">Перейти к прайсу →</button></div><div class="grid"><div class="card"><div class="muted">Категории</div><div class="stat">38</div></div><div class="card"><div class="muted">Позиции прайса</div><div class="stat">310</div></div><div class="card"><div class="muted">Смета</div><div class="stat">${estimate.length}</div></div><div class="card"><div class="muted">Сохранение</div><div class="stat">✓</div></div></div><div class="card" style="margin-top:15px"><h3>Проверка приложения</h3><p class="muted">Это рабочий предпросмотр: можно переходить по всем вкладкам, открывать категории, добавлять позиции в расчёт и проверять сохранение.</p></div>`}
+function price(c){if(currentCat!==null)return items(c);c.innerHTML=`<div class="card"><input class="search" placeholder="Поиск по категориям..." oninput="filterCats(this.value)"></div><div class="catgrid" id="cats">${cats.map((x,i)=>`<div class="cat" data-name="${x[0].toLowerCase()}" onclick="openCat(${i})"><b>${i+1}. ${x[0]}</b><span class="muted">${x[1]} позиций</span></div>`).join("")}</div><p class="muted" style="margin-top:15px">Всего: 38 категорий · заявлено 310 позиций в полной версии прайса.</p>`}
+function filterCats(v){document.querySelectorAll(".cat").forEach(e=>e.style.display=e.dataset.name.includes(v.toLowerCase())?"block":"none")}
+function openCat(i){currentCat=i;render()}
+function items(c){let name=cats[currentCat][0], arr=demo[name]||Array.from({length:Math.min(cats[currentCat][1],5)},(_,i)=>[`Позиция ${i+1}`, "шт", 0]);c.innerHTML=`<div class="actions"><button class="btn secondary" onclick="currentCat=null;render()">← Все категории</button><input style="max-width:360px" class="search" placeholder="Поиск по товарам..." oninput="filterItems(this.value)"></div><div class="card" style="margin-top:14px"><h3>Категория: ${name}</h3><table class="table"><thead><tr><th>№</th><th>Наименование</th><th>Ед.</th><th>Цена, ₽</th><th></th></tr></thead><tbody id="items">${arr.map((x,i)=>`<tr data-name="${x[0].toLowerCase()}"><td>${i+1}</td><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td><button class="btn" onclick="addItem('${x[0]}','${x[1]}',${x[2]})">Добавить</button></td></tr>`).join("")}</tbody></table></div>`}
+function filterItems(v){document.querySelectorAll("#items tr").forEach(e=>e.style.display=e.dataset.name.includes(v.toLowerCase())?"table-row":"none")}
+function addItem(name,unit,price){estimate.push({name,unit,price,qty:1});localStorage.setItem("murad_estimate",JSON.stringify(estimate));alert("Позиция добавлена в расчёт")}
+function calc(c){let total=estimate.reduce((s,x)=>s+x.qty*x.price,0);c.innerHTML=`<div class="row"><div class="card"><h3>Добавление позиции</h3><button class="btn" onclick="go('Прайс')">Выбрать из прайса</button></div><div class="card"><h3>Итого</h3><div class="stat">${total.toLocaleString('ru-RU')} ₽</div></div></div><div class="card" style="margin-top:14px"><table class="table"><thead><tr><th>№</th><th>Наименование</th><th>Кол-во</th><th>Цена</th><th>Сумма</th><th></th></tr></thead><tbody>${estimate.length?estimate.map((x,i)=>`<tr><td>${i+1}</td><td>${x.name}</td><td><input type="number" min="1" value="${x.qty}" style="width:75px" onchange="qty(${i},this.value)"></td><td>${x.price}</td><td>${(x.qty*x.price).toLocaleString('ru-RU')}</td><td><button class="btn danger" onclick="del(${i})">Удалить</button></td></tr>`).join(""):`<tr><td colspan="6" class="empty">Расчёт пуст. Открой «Прайс» и добавь позиции.</td></tr>`}</tbody></table><div class="actions" style="margin-top:15px"><button class="btn secondary" onclick="estimate=[];save();render()">Очистить</button><button class="btn" onclick="alert('Расчёт пересчитан')">Рассчитать</button></div></div>`}
+function qty(i,v){estimate[i].qty=Math.max(1,+v||1);save();render()}function del(i){estimate.splice(i,1);save();render()}function save(){localStorage.setItem("murad_estimate",JSON.stringify(estimate))}
+function orders(c){let total=estimate.reduce((s,x)=>s+x.qty*x.price,0);c.innerHTML=`<div class="row"><div class="card"><h3>Информация о заказе</h3><input placeholder="ФИО заказчика"><br><br><input placeholder="Телефон"><br><br><input placeholder="Адрес"><br><br><input type="date"><br><br><textarea placeholder="Комментарий" rows="4"></textarea></div><div class="card"><h3>Список работ и материалов</h3><p>${estimate.length} позиций</p><div class="total">${total.toLocaleString('ru-RU')} ₽</div><div class="actions"><button class="btn" onclick="alert('Заказ сохранён в браузере')">Сохранить</button><button class="btn secondary" onclick="window.print()">Создать PDF / печать</button></div></div></div>`}
+function panels(c){c.innerHTML=`<div class="grid">${["24 модуля","36 модулей","54 модуля","72 модуля","96 модулей"].map(x=>`<div class="card"><div class="stat">⚡</div><h3>Щит на ${x}</h3><p class="muted">Место для схемы, состава аппаратов и примечаний.</p><button class="btn secondary" onclick="alert('Раздел щита: ${x}')">Открыть</button></div>`).join("")}</div>`}
+function materials(c){c.innerHTML=`<div class="grid">${["Гильзы ГМЛ","Наконечники НШВИ","Клеммы","DIN-рейка","Гофра","Крепёж","Маркировка","Расходники"].map(x=>`<div class="card"><h3>${x}</h3><p class="muted">Материалы для электромонтажа</p></div>`).join("")}</div>`}
+function checklist(c){let a=["Обесточить линию","Проверить отсутствие напряжения","Проверить сечение кабеля","Проверить PE/N","Проверить затяжку клемм","Проверить УЗО/дифзащиту","Проверить маркировку","Сделать фото готового монтажа"];c.innerHTML=`<div class="card"><h3>Чек-лист перед сдачей работы</h3>${a.map((x,i)=>`<label style="display:block;padding:13px;border-bottom:1px solid #333"><input type="checkbox"> ${x}</label>`).join("")}</div>`}
+function settings(c){c.innerHTML=`<div class="row"><div class="card"><h3>Установка цен</h3><label>Наценка (%)<input value="10"></label><br><label>Скидка (%)<input value="5"></label><br><label>Валюта<select><option>₽</option><option>€</option></select></label><br><button class="btn" onclick="alert('Настройки сохранены')">Сохранить</button></div><div class="card"><h3>Информация</h3><p>Мастер: <b>Электрик Мурад</b></p><p>Город: Махачкала</p><p class="muted">Поле стажа в интерфейсе не используется.</p></div></div>`}
+go("Главная");
+</script>
+</body>
+</html>
